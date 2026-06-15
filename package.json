@@ -1,0 +1,5 @@
+{
+  "name": "vyaa",
+  "private": true,
+  "workspaces": ["frontend", "backend"]
+}

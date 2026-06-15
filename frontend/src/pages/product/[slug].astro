@@ -1,0 +1,18 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import { ProductDetail } from "../../islands/ProductDetail";
+import { getProduct } from "../../lib/products";
+
+const { slug } = Astro.params;
+const product = await getProduct(slug || "");
+---
+
+<MainLayout>
+  {product ? (
+    <ProductDetail slug={slug} product={product} client:load />
+  ) : (
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center text-muted-foreground">
+      Product not found
+    </div>
+  )}
+</MainLayout>
