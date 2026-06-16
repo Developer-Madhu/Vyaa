@@ -40,8 +40,10 @@ app.use("/api/admin", adminRoutes);
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`VYAA API server running on http://localhost:${PORT}`);
-});
+if (process.env.VERCEL !== "1") {
+  app.listen(PORT, () => {
+    console.log(`VYAA API server running on http://localhost:${PORT}`);
+  });
+}
 
 export default app;
