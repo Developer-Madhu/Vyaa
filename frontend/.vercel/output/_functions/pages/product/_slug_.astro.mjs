@@ -5,7 +5,7 @@ import { jsx, jsxs } from 'react/jsx-runtime';
 import { useState } from 'react';
 import { ChevronRight, Star, Heart, Truck, RefreshCcw } from 'lucide-react';
 import { motion } from 'motion/react';
-import { g as getProduct } from '../../chunks/products_Bre5kYYM.mjs';
+import { g as getProduct } from '../../chunks/products_BygUdmxr.mjs';
 export { renderers } from '../../renderers.mjs';
 
 function ProductDetail({ slug, product }) {

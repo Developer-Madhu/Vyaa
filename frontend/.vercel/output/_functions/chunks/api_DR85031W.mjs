@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3001/api";
+const API_BASE = "https://vyaa-backend.vercel.app/api";
 async function request(endpoint, options = {}) {
   const token = typeof window !== "undefined" ? localStorage.getItem("vyaa-token") : null;
   const headers = {

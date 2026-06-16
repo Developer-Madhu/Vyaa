@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { Loader2, User, Package, Heart, MapPin, LogOut } from 'lucide-react';
 import { useStore } from '@nanostores/react';
 import { $ as $authToken, a as $user, l as logout } from '../chunks/authStore_L5dEO1VH.mjs';
-import { a as api } from '../chunks/api_Df0vaV6f.mjs';
+import { a as api } from '../chunks/api_DR85031W.mjs';
 export { renderers } from '../renderers.mjs';
 
 const TABS = [
@@ -62,7 +62,7 @@ function Account() {
   async function fetchAddresses() {
     try {
       const data = await api.auth.me();
-      const { data: addrData } = await fetch(`${"http://localhost:3001/api"}/addresses`, {
+      const { data: addrData } = await fetch(`${"https://vyaa-backend.vercel.app/api"}/addresses`, {
         headers: { Authorization: `Bearer ${token}` }
       }).then((r) => r.json());
       setAddresses(addrData || []);

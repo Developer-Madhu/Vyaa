@@ -1,5 +1,5 @@
 async function getProduct(slug) {
-  const API_URL = "http://localhost:3001/api";
+  const API_URL = "https://vyaa-backend.vercel.app/api";
   try {
     const res = await fetch(`${API_URL}/products/${slug}`);
     if (!res.ok) return null;
@@ -9,7 +9,7 @@ async function getProduct(slug) {
   }
 }
 async function getProducts(params) {
-  const API_URL = "http://localhost:3001/api";
+  const API_URL = "https://vyaa-backend.vercel.app/api";
   const qs = "";
   try {
     const res = await fetch(`${API_URL}/products${qs}`);
@@ -20,7 +20,7 @@ async function getProducts(params) {
   }
 }
 async function getCategories() {
-  const API_URL = "http://localhost:3001/api";
+  const API_URL = "https://vyaa-backend.vercel.app/api";
   try {
     const res = await fetch(`${API_URL}/categories`);
     if (!res.ok) return [];

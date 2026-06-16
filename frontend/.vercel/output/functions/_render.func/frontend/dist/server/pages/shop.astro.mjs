@@ -5,7 +5,7 @@ import { jsxs, jsx } from 'react/jsx-runtime';
 import { useState } from 'react';
 import { P as ProductCard } from '../chunks/ProductCard_QrKgkaSU.mjs';
 import { Search, SlidersHorizontal, ChevronDown } from 'lucide-react';
-import { a as getProducts, b as getCategories } from '../chunks/products_Bre5kYYM.mjs';
+import { a as getProducts, b as getCategories } from '../chunks/products_BygUdmxr.mjs';
 import { f as formatPrice } from '../chunks/utils_FnLTpj-f.mjs';
 export { renderers } from '../renderers.mjs';
 

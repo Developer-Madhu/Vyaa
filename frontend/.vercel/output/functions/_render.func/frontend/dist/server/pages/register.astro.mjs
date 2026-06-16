@@ -7,7 +7,7 @@ import { motion } from 'motion/react';
 import { EyeOff, Eye, Loader2 } from 'lucide-react';
 import { useStore } from '@nanostores/react';
 import { $ as $authToken, a as $user, b as login } from '../chunks/authStore_L5dEO1VH.mjs';
-import { a as api } from '../chunks/api_Df0vaV6f.mjs';
+import { a as api } from '../chunks/api_DR85031W.mjs';
 export { renderers } from '../renderers.mjs';
 
 function RegisterForm() {

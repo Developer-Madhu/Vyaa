@@ -1,6 +1,6 @@
 import { renderers } from './renderers.mjs';
 import { s as serverEntrypointModule } from './chunks/_@astrojs-ssr-adapter_VFUEmVsm.mjs';
-import { manifest } from './manifest_e_coZqQh.mjs';
+import { manifest } from './manifest_CLgN0LIa.mjs';
 
 const serverIslandMap = new Map();;
 

@@ -5,7 +5,7 @@ import 'clsx';
 import { jsx, jsxs } from 'react/jsx-runtime';
 import { useState, useEffect } from 'react';
 import { TrendingUp, Package, Users, DollarSign, Search, Bell, Settings, Plus, X } from 'lucide-react';
-import { a as api } from '../chunks/api_Df0vaV6f.mjs';
+import { a as api } from '../chunks/api_DR85031W.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$AdminLayout = createComponent(($$result, $$props, $$slots) => {
