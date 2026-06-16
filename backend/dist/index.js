@@ -40,18 +40,26 @@ app.use(cors({
     optionsSuccessStatus: 200,
 }));
 app.use(express.json());
-app.get("/api/health", (_req, res) => {
+// Handle OPTIONS preflight requests globally
+app.use((req, res, next) => {
+    if (req.method === "OPTIONS") {
+        res.sendStatus(200);
+        return;
+    }
+    next();
+});
+app.get(["/api/health", "/health"], (_req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
-app.use("/api/auth", authRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/categories", categoryRoutes);
-app.use("/api/cart", cartRoutes);
-app.use("/api/wishlist", wishlistRoutes);
-app.use("/api/orders", orderRoutes);
-app.use("/api/checkout", checkoutRoutes);
-app.use("/api/coupons", couponRoutes);
-app.use("/api/admin", adminRoutes);
+app.use(["/api/auth", "/auth"], authRoutes);
+app.use(["/api/products", "/products"], productRoutes);
+app.use(["/api/categories", "/categories"], categoryRoutes);
+app.use(["/api/cart", "/cart"], cartRoutes);
+app.use(["/api/wishlist", "/wishlist"], wishlistRoutes);
+app.use(["/api/orders", "/orders"], orderRoutes);
+app.use(["/api/checkout", "/checkout"], checkoutRoutes);
+app.use(["/api/coupons", "/coupons"], couponRoutes);
+app.use(["/api/admin", "/admin"], adminRoutes);
 app.use(errorHandler);
 if (process.env.NETLIFY !== "1" && !process.env.VERCEL) {
     app.listen(PORT, () => {
