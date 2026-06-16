@@ -19,9 +19,33 @@ const app = express();
 const PORT = parseInt(process.env.PORT || "3001", 10);
 
 app.use(helmet());
+const allowedOrigins = [
+  "http://localhost:4321",
+  "http://localhost:3000",
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:4321",
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    
+    // Check configured FRONTEND_URL
+    if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL.replace(/\/$/, "")) {
+      return callback(null, true);
+    }
+    
+    // Allow localhost and Netlify subdomains
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith(".netlify.app") ||
+      origin.startsWith("http://localhost:")
+    ) {
+      return callback(null, true);
+    }
+    
+    callback(null, false);
+  },
   credentials: true,
+  optionsSuccessStatus: 200,
 }));
 app.use(express.json());
 
