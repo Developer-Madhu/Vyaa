@@ -15,7 +15,6 @@ import couponRoutes from "./routes/coupons.js";
 import adminRoutes from "./routes/admin.js";
 const app = express();
 const PORT = parseInt(process.env.PORT || "3001", 10);
-app.use(helmet());
 const allowedOrigins = [
     "http://localhost:4321",
     "http://localhost:3000",
@@ -45,6 +44,7 @@ app.use(cors({
 }));
 // Explicitly handle preflight OPTIONS requests for all routes
 app.options("*", cors());
+app.use(helmet());
 app.use(express.json());
 // Handle OPTIONS preflight requests globally
 app.use((req, res, next) => {
