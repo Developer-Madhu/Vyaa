@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import "dotenv/config";
+import serverless from "serverless-http";
 
 import { errorHandler } from "./middleware/errorHandler.js";
 import authRoutes from "./routes/auth.js";
@@ -40,10 +41,11 @@ app.use("/api/admin", adminRoutes);
 
 app.use(errorHandler);
 
-if (process.env.VERCEL !== "1") {
+if (process.env.NETLIFY !== "1") {
   app.listen(PORT, () => {
     console.log(`VYAA API server running on http://localhost:${PORT}`);
   });
 }
 
+export const handler = serverless(app);
 export default app;

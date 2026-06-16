@@ -1,0 +1,9 @@
+[build]
+  command = "npm run build --workspace=frontend && npm run build --workspace=backend"
+  publish = "frontend/dist"
+  functions = "backend/dist"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/index/:splat"
+  status = 200
