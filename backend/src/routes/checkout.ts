@@ -1,13 +1,24 @@
-import { Router, Response } from "express";
+import { Router, Response, Request, NextFunction } from "express";
 import { supabase } from "../services/supabase.js";
 import { razorpay, verifyPaymentSignature } from "../services/razorpay.js";
 import { sendEmail, orderConfirmationEmail } from "../services/resend.js";
 import { requireAuth, AuthenticatedRequest } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
 import { checkoutInitSchema, checkoutVerifySchema } from "../validators/index.js";
-import { v4 as uuidv4 } from "uuid";
+import crypto from "crypto";
 
 const router = Router();
+
+const rawBodyMiddleware = (req: Request, _res: Response, next: NextFunction) => {
+  let data = "";
+  req.on("data", (chunk) => {
+    data += chunk;
+  });
+  req.on("end", () => {
+    (req as any).rawBody = data;
+    next();
+  });
+};
 
 router.use(requireAuth);
 
@@ -101,7 +112,7 @@ router.post("/init", validate(checkoutInitSchema), async (req: AuthenticatedRequ
   if (idempotencyKey) {
     const { data: existingOrder } = await supabase
       .from("orders")
-      .select("id, razorpay_order_id, status")
+      .select("id, razorpay_order_id, status, total")
       .eq("user_id", req.userId)
       .eq("payment_id", idempotencyKey)
       .single();
@@ -252,26 +263,25 @@ router.post("/verify", validate(checkoutVerifySchema), async (req: Authenticated
 });
 
 // Webhook listener for Razorpay payment.captured
-router.post("/webhook/razorpay", async (req: Request, res: Response) => {
-  const signature = req.headers['x-razorpay-signature'];
+router.post("/webhook/razorpay", rawBodyMiddleware, async (req: AuthenticatedRequest, res: Response) => {
+  const signature = req.headers['x-razorpay-signature'] as string;
   const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
 
   if (!signature || !webhookSecret) {
     return res.status(400).json({ message: "Missing signature or webhook secret" });
   }
 
-  const crypto = require('crypto');
+  const rawBody = (req as any).rawBody;
   const expectedSignature = crypto
     .createHmac("sha256", webhookSecret)
-    .update(JSON.stringify(req.body))
+    .update(rawBody)
     .digest("hex");
 
   if (signature !== expectedSignature) {
     return res.status(400).json({ message: "Invalid signature" });
   }
 
-  const body = await req.text();
-  const { event, payload } = JSON.parse(body);
+  const { event, payload } = JSON.parse(rawBody);
 
   if (event === "payment.captured") {
     const payment = payload.payment.entity;
