@@ -22,6 +22,8 @@ app.use(helmet());
 const allowedOrigins = [
   "http://localhost:4321",
   "http://localhost:3000",
+  "http://localhost:5173",
+  "https://vyaa.netlify.app"
 ];
 
 app.use(cors({
@@ -42,11 +44,17 @@ app.use(cors({
       return callback(null, true);
     }
     
-    callback(null, false);
+    callback(new Error("Blocked by CORS"));
   },
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "Idempotency-Key"],
   optionsSuccessStatus: 200,
 }));
+
+// Explicitly handle preflight OPTIONS requests for all routes
+app.options("*", cors());
+
 app.use(express.json());
 
 // Handle OPTIONS preflight requests globally
