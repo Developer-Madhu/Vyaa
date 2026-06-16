@@ -41,7 +41,7 @@ app.use("/api/admin", adminRoutes);
 
 app.use(errorHandler);
 
-if (process.env.NETLIFY !== "1") {
+if (process.env.NETLIFY !== "1" && !process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`VYAA API server running on http://localhost:${PORT}`);
   });
