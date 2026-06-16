@@ -38,7 +38,7 @@ router.get("/dashboard", async (req: AuthenticatedRequest, res: Response) => {
     .eq("status", "PAID")
     .gte("created_at", new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString());
 
-  const totalRevenue = (revenueData || []).reduce((sum, o) => sum + o.total, 0);
+  const totalRevenue = (revenueData || []).reduce((sum: number, o: any) => sum + o.total, 0);
 
   const { count: ordersCount } = await supabase
     .from("orders")
@@ -355,7 +355,7 @@ router.get("/customers", async (_req: AuthenticatedRequest, res: Response) => {
   }
 
   const customersWithOrders = await Promise.all(
-    (data || []).map(async (customer) => {
+    (data || []).map(async (customer: any) => {
       const { count } = await supabase
         .from("orders")
         .select("*", { count: "exact", head: true })

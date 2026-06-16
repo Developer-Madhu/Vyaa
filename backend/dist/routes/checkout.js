@@ -29,7 +29,7 @@ router.post("/init", validate(checkoutInitSchema), async (req, res) => {
         return;
     }
     // Stale Price Validation - Re-fetch current prices from database
-    const productIds = cartItems.map(item => item.product_id);
+    const productIds = cartItems.map((item) => item.product_id);
     const { data: currentProducts, error: productsError } = await supabase
         .from("products")
         .select("id, price")
@@ -40,7 +40,7 @@ router.post("/init", validate(checkoutInitSchema), async (req, res) => {
         return;
     }
     const currentPrices = new Map();
-    (currentProducts || []).forEach(product => {
+    (currentProducts || []).forEach((product) => {
         currentPrices.set(product.id, product.price);
     });
     // Validate prices and calculate subtotal with current prices

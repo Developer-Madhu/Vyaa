@@ -71,7 +71,7 @@ router.post("/login", validate(loginSchema), async (req: Request, res: Response)
       .eq("user_id", data.user.id);
 
     const existingMap = new Map();
-    (existingItems || []).forEach((item) => {
+    (existingItems || []).forEach((item: any) => {
       existingMap.set(`${item.product_id}-${item.size}`, item);
     });
 

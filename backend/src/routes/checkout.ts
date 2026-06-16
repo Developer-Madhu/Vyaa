@@ -36,7 +36,7 @@ router.post("/init", validate(checkoutInitSchema), async (req: AuthenticatedRequ
   }
 
   // Stale Price Validation - Re-fetch current prices from database
-  const productIds = cartItems.map(item => item.product_id);
+  const productIds = cartItems.map((item: any) => item.product_id);
   const { data: currentProducts, error: productsError } = await supabase
     .from("products")
     .select("id, price")
@@ -49,7 +49,7 @@ router.post("/init", validate(checkoutInitSchema), async (req: AuthenticatedRequ
   }
 
   const currentPrices = new Map();
-  (currentProducts || []).forEach(product => {
+  (currentProducts || []).forEach((product: any) => {
     currentPrices.set(product.id, product.price);
   });
 
@@ -164,7 +164,7 @@ router.post("/init", validate(checkoutInitSchema), async (req: AuthenticatedRequ
       .eq("id", order.id);
   }
 
-  const orderItems = cartItems.map((item) => ({
+  const orderItems = cartItems.map((item: any) => ({
     order_id: order.id,
     product_id: item.product_id,
     size: item.size,
